@@ -263,19 +263,6 @@ body {
     color: #ffffff;
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
-/* Stacks the footer columns neatly on smaller screens */
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .footer-col h4 {
-        margin-bottom: 1rem;
-    }
-}
-
 /* --- THE SECRET SAUCE FOR EXTRA BLOCKS --- */
 /* Ensure Introduction spans the full width, but text inside is constrained */
 /* --- INTRODUCTION SECTION --- */
@@ -532,4 +519,118 @@ h2::before {
 
     /* Ensures the bottom line stretches across the entire container */
     width: 100%;
+}
+
+/* --- HAMBURGER ICON BASE --- */
+.hamburger {
+    display: none; /* Hidden on desktop */
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1001; /* Keeps the icon above the sliding drawer */
+}
+
+.hamburger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* --- MOBILE NAVIGATION STYLES --- */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-col h4 {
+        margin-bottom: 1rem;
+    }
+    /* Loading Screen */
+    .loading-content h1 {
+        font-size: 2rem; /* Shrunk from 3rem */
+    }
+    #loading-percentage {
+        font-size: 1.2rem; /* Shrunk from 1.5rem */
+    }
+
+    /* Hero Banner */
+    .banner-text h2 {
+        font-size: 1.8rem; /* Shrunk from 2.5rem */
+    }
+    .banner-text p {
+        font-size: 1.2rem; /* Shrunk from 2rem */
+    }
+
+    .hamburger {
+        display: flex;
+
+        /* 1. Force the hamburger to be the first item visually */
+        order: -1;
+
+        /* 2. Remove the rule that was pushing it to the right */
+        margin-left: 0; /* Or just delete the margin-left: auto; line you added previously */
+
+        /* 3. Add a little breathing room between the burger and your brand name */
+        margin-right: 1.5rem;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        /* 1. Hide it off-screen to the LEFT */
+        left: -100%;
+        right: auto; /* Clears out the old right rule just in case */
+        width: 250px;
+        height: 100vh;
+        background-color: #111111;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+
+        /* 2. Tell the browser to animate the 'left' position */
+        transition: left 0.4s ease;
+
+        /* 3. Flip the shadow so it casts to the right side of the menu */
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 4. Slide it to the 0px mark on the left edge when active */
+    .nav-links.active {
+        left: 0;
+    }
+
+    /* Space out the stacked links */
+    .nav-links li {
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+    }
+
+    /* Bonus: Animate the hamburger into an 'X' when open */
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .intro-layout {
+        flex-direction: column; /* Stacks the image below the text on small screens */
+        align-items: stretch; /* OVERRIDE: Forces the text block to take full width */
+        gap: 3rem;
+    }
+
+    .intro-image {
+        flex: auto; /* Removes the fixed width constraint on mobile */
+        align-self: center; /* OPTIONAL: Keeps the image centered horizontally if you use one */
+    }
 }

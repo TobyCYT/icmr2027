@@ -1,12 +1,41 @@
+# services:
+#   icmr-website:
+#     # Tells Compose to build using the Dockerfile in the current directory
+#     build: .
+#     container_name: icmr2027-web
+#     ports:
+#       # Maps port 8080 on your local machine to port 80 inside the container
+#       - "8080:80"
+#     volumes:
+#       # Maps your local folder to the container's folder for live updates
+#       - .:/usr/share/nginx/html
+#     restart: unless-stopped
+
 services:
   icmr-website:
-    # Tells Compose to build using the Dockerfile in the current directory
     build: .
     container_name: icmr2027-web
-    ports:
-      # Maps port 8080 on your local machine to port 80 inside the container
-      - "8080:80"
+    expose:
+      - "80"
     volumes:
-      # Maps your local folder to the container's folder for live updates
       - .:/usr/share/nginx/html
     restart: unless-stopped
+    networks:
+      - proxy-network
+
+  nginx-proxy-manager:
+    image: "jc21/nginx-proxy-manager:latest"
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81" # Web UI port
+      - "443:443"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - proxy-network
+
+networks:
+  proxy-network:

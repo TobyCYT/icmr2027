@@ -56,6 +56,30 @@ setInterval(syncBackground, 60000);
 
 // Wait for the HTML document to fully load before running scripts
 document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+
+  // Safety check: Ensure the elements actually exist on this page
+  if (hamburger && navLinks) {
+    hamburger.addEventListener("click", () => {
+      // Toggle the drawer
+      navLinks.classList.toggle("active");
+      // Toggle the 'X' animation
+      hamburger.classList.toggle("active");
+    });
+
+    // Optional but recommended: Close the menu when a link is clicked
+    const links = navLinks.querySelectorAll("a");
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        hamburger.classList.remove("active");
+      });
+    });
+  } else {
+    console.error("Hamburger menu elements not found in the DOM.");
+  }
+
   const loadingScreen = document.getElementById("loading-screen");
   const progressText = document.getElementById("loading-percentage");
   const bgVideo = document.getElementById("bg-video"); // Your video element
