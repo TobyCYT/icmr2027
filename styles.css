@@ -1,0 +1,535 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Navigation Bar (The full-width background bar) */
+.navbar {
+    background-color: #ed2939; /* Singapore Flag Red */
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* Remove display: flex from here so the bar itself stays structural */
+}
+
+/* --- UNIVERSAL CONTENT CONTAINER --- */
+.container {
+    max-width: 1200px; /* Adjust this to 1500px if you want it wider */
+    width: 100%;
+    margin: 0 auto; /* This perfectly centers the container horizontally */
+    padding: 0 2rem; /* Prevents text from touching the screen edge on mobile */
+}
+
+/* Update your existing .nav-container to just use the new standard container plus flexbox */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffcccc; /* Light red/pink hover effect */
+}
+
+/* Video Loading Screen Container */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999; /* Keeps it on top of everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #000; /* Fallback color */
+    transition: opacity 1s ease-out; /* Smooth fade out */
+}
+
+/* The Background Video */
+#bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Forces width to 100% of viewport */
+    height: 100vh; /* Forces height to 100% of viewport */
+    object-fit: cover; /* THE MAGIC LINE: Crops perfectly to fill screen */
+    z-index: 1;
+}
+/* Double-Buffer Video Layout Fixes */
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Crops the time-lapse to cleanly fill your 400px banner */
+    transition: opacity 2s ease-in-out; /* Buttery smooth crossfade transition */
+}
+
+/* The Dimming Overlay */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* 60% dark overlay */
+    z-index: 2;
+}
+
+/* The Centered Text */
+.loading-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: white;
+}
+
+.loading-content h1 {
+    font-size: 3rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+#loading-percentage {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ed2939; /* Singapore Flag Red highlight */
+}
+
+/* The isolated container for your video banner background */
+.hero-banner {
+    height: 800px; /* Forces an explicit physical height for the block */
+    width: 100%;
+    position: relative; /* Anchor point for internal absolute items */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Clips video spillover cleanly */
+}
+
+/* Double-Buffer Video Layout Constraints */
+#video-container {
+    position: absolute; /* Locks inside the bounds of .hero-banner */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Perfectly crops the clip to match the 400px box */
+    transition: opacity 2s ease-in-out;
+}
+
+/* Hero Banner Updates */
+.banner-text {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    /* The background and padding can be removed or kept depending on if you want the dark box behind the text */
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+}
+
+.banner-text h2 {
+    font-size: 2.5rem;
+}
+
+.banner-text p {
+    font-size: 2rem;
+}
+
+/* --- FOOTER STYLES --- */
+.footer {
+    background-color: #111111; /* Deep charcoal/black background */
+    color: #ffffff;
+    border-top: 4px solid #ed2939; /* Singapore Flag Red accent line */
+    padding: 4rem 0 2rem 0; /* Space at top and bottom */
+    font-size: 0.9rem;
+}
+
+/* Grid layout to handle the columns */
+.footer-grid {
+    display: grid;
+    /* Col 1 is slightly wider (1.5 fraction) than Col 2 and 3 (1 fraction each) */
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+.footer-col h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.footer-col p {
+    margin-bottom: 0.5rem;
+    color: #cccccc; /* Soft grey for readability against black */
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-col a {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-col a:hover {
+    color: #ffffff;
+    text-decoration: underline; /* Standard accessible hover state */
+}
+
+/* Specific styling for the ACM logo */
+.footer-logo {
+    max-width: 180px;
+    margin-top: 1.5rem;
+    filter: brightness(
+        0.9
+    ); /* Subtly dims a bright white logo to fit the dark theme */
+}
+
+/* The bottom copyright area */
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #333333; /* Subtle dividing line */
+    padding-top: 2rem;
+    color: #888888;
+    font-size: 0.8rem;
+}
+
+.footer-bottom p {
+    margin-bottom: 0.5rem;
+}
+
+.footer-bottom a {
+    color: #888888;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    color: #ffffff;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+/* Stacks the footer columns neatly on smaller screens */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-col h4 {
+        margin-bottom: 1rem;
+    }
+}
+
+/* --- THE SECRET SAUCE FOR EXTRA BLOCKS --- */
+/* Ensure Introduction spans the full width, but text inside is constrained */
+/* --- INTRODUCTION SECTION --- */
+.introduction {
+    position: relative;
+    width: 100%;
+    padding: 5rem 0;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+/* Flexbox layout to sit text and image side-by-side */
+.intro-layout {
+    display: flex;
+    align-items: center; /* Vertically centers the image alongside the text */
+    justify-content: space-between;
+    gap: 4rem; /* Adds breathing room between the text and the image */
+}
+
+/* Left Column Styling */
+.intro-text {
+    flex: 1; /* Tells the text to take up all remaining available space */
+}
+
+.intro-text h2 {
+    font-size: 2.2rem;
+    color: #4a0b12; /* Matches the dark burgundy/red from the screenshot */
+    margin-bottom: 1.5rem;
+}
+
+.intro-text p {
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+}
+
+.intro-text p:last-child {
+    margin-bottom: 0; /* Removes extra space after the final paragraph */
+}
+
+/* Right Column Styling */
+.intro-image {
+    flex: 0 0 250px; /* Locks the image column to a fixed width of 250px */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.intro-image img {
+    width: 100%;
+    max-width: 220px; /* Prevents the image from getting too massive */
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.intro-image p {
+    font-weight: 700;
+    color: #555555;
+    font-size: 0.95rem;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 800px) {
+    .intro-layout {
+        flex-direction: column; /* Stacks the image below the text on small screens */
+        gap: 3rem;
+    }
+
+    .intro-image {
+        flex: auto; /* Removes the fixed width constraint on mobile */
+    }
+}
+/* --- LATEST NEWS SECTION --- */
+.news-section {
+    padding: 5rem 0;
+    background-color: #f4f4f9; /* Soft grey alternating background */
+    width: 100%;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 3rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+/* Subtle red accent line under the section header */
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 290px;
+    height: 4px;
+    background-color: #ed2939; /* Singapore Flag Red */
+    border-radius: 2px;
+}
+
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Space between news blocks */
+}
+
+.news-item {
+    display: flex;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.news-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Date Badge Layout */
+.news-date {
+    background-color: #ed2939; /* Red theme color */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 100px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.news-date .day {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.news-date .month {
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 0.2rem 0;
+}
+
+.news-date .year {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Content Area Layout */
+.news-content {
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.news-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-content h3 a {
+    color: #222222;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.news-content h3 a:hover {
+    color: #ed2939; /* Highlight title on hover */
+}
+
+.news-content p {
+    color: #666666;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 600px) {
+    .news-item {
+        flex-direction: column; /* Stack date above content on small screens */
+    }
+
+    .news-date {
+        flex-direction: row;
+        min-width: 100%;
+        gap: 0.5rem;
+        padding: 0.6rem;
+    }
+
+    .news-date .day {
+        font-size: 1.3rem;
+    }
+
+    .news-content {
+        padding: 1.2rem;
+    }
+}
+
+/* Optional helper utility class to alternate background colors */
+.secondary-theme {
+    background-color: #f4f4f9;
+}
+
+/* --- MERLION HEADING DECORATION --- */
+h2::before {
+    content: ""; /* Required for pseudo-elements to render */
+    display: inline-block;
+    width: 40px; /* Adjust width of the Merlion */
+    height: 40px; /* Adjust height of the Merlion */
+
+    /* Point this to your actual image file */
+    background-image: url("media/merlion-logo.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    /* Spacing and Alignment */
+    margin-right: 15px; /* Pushes the text away from the image */
+    vertical-align: middle; /* Keeps the icon vertically centered with the text */
+
+    /* Optional: Slight nudge to perfectly align with the text baseline */
+    position: relative;
+    top: -3px;
+}
+
+/* If you want to exclude the Merlion from certain areas (like the banner) */
+.banner-text h2::before {
+    display: none;
+}
+
+/* --- L-BRACKET HEADING STYLE --- */
+.bracket-heading {
+    font-size: 2.2rem;
+    font-weight: 800; /* Makes the text thick and bold */
+    color: #4a0b12; /* Dark burgundy text color */
+
+    /* The Red Accent Lines */
+    border-left: 5px solid #ed2939; /* Thick left vertical line */
+    border-bottom: 2px solid #ed2939; /* Thinner bottom horizontal line */
+
+    /* Internal Spacing (Pushes text away from the lines) */
+    padding-left: 1.2rem;
+    padding-bottom: 0.8rem;
+
+    /* External Spacing (Pushes following content down) */
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+
+    /* Ensures the bottom line stretches across the entire container */
+    width: 100%;
+}
