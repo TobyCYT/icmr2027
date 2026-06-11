@@ -634,3 +634,72 @@ h2::before {
         align-self: center; /* OPTIONAL: Keeps the image centered horizontally if you use one */
     }
 }
+
+/* --- COMMITTEE MEMBER GRID SYSTEM --- */
+.member-grid {
+    display: grid;
+    /* Automatically handles columns based on screen size; switches to 1 column on mobile */
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+/* Individual Card Styling */
+.member-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    border-top: 3px solid #ed2939; /* Clean Singapore Red accent line across cards */
+}
+
+.member-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Circular Profile Avatars */
+.member-avatar img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.2rem;
+    background-color: #eee; /* Fallback color before image loads */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Info Text Styling */
+.member-info h3 {
+    font-size: 1.2rem;
+    color: #222222;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+}
+
+.member-info .affiliation {
+    font-size: 0.95rem;
+    color: #555555;
+    line-height: 1.4;
+    margin-bottom: 0.2rem;
+}
+
+.member-info .country {
+    font-size: 0.85rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Fallback placeholder text style */
+.placeholder-text {
+    color: #666666;
+    font-style: italic;
+    font-size: 1.05rem;
+    grid-column: 1 / -1; /* Ensures text spans cleanly even inside grid */
+}
