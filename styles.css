@@ -1,4 +1,11 @@
-/* Reset and Base Styles */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+/* ==========================================================================
+   1. RESET & BASE STYLES
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -6,12 +13,88 @@
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Global Paragraph Styling for Academic Justification */
+p {
+    text-align: justify;
+    text-justify: inter-word; /* Distributes space evenly between words, not letters */
+
+    /* CRITICAL: Allows the browser to hyphenate long words instead of creating massive white gaps */
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+
 body {
     background-color: #f4f4f9;
     color: #333;
 }
 
-/* Navigation Bar (The full-width background bar) */
+/* ==========================================================================
+   2. TYPOGRAPHY & UTILITIES
+   ========================================================================== */
+/* Optional helper utility class to alternate background colors */
+.secondary-theme {
+    background-color: #f4f4f9;
+}
+
+/* --- MERLION HEADING DECORATION --- */
+h2::before {
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-image: url("media/merlion-logo.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 15px;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;
+}
+
+/* Exclude the Merlion from the banner */
+.banner-text h2::before {
+    display: none;
+}
+
+/* --- L-BRACKET HEADING STYLE --- */
+.bracket-heading {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #4a0b12;
+    border-left: 5px solid #ed2939;
+    border-bottom: 2px solid #ed2939;
+    padding-left: 1.2rem;
+    padding-bottom: 0.8rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+/* Fallback placeholder text style */
+.placeholder-text {
+    color: #666666;
+    font-style: italic;
+    font-size: 1.05rem;
+    grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   3. LAYOUT CONTAINERS
+   ========================================================================== */
+/* --- UNIVERSAL CONTENT CONTAINER --- */
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ==========================================================================
+   4. NAVIGATION BAR
+   ========================================================================== */
 .navbar {
     background-color: #ed2939; /* Singapore Flag Red */
     color: white;
@@ -20,18 +103,8 @@ body {
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
-    /* Remove display: flex from here so the bar itself stays structural */
 }
 
-/* --- UNIVERSAL CONTENT CONTAINER --- */
-.container {
-    max-width: 1200px; /* Adjust this to 1500px if you want it wider */
-    width: 100%;
-    margin: 0 auto; /* This perfectly centers the container horizontally */
-    padding: 0 2rem; /* Prevents text from touching the screen edge on mobile */
-}
-
-/* Update your existing .nav-container to just use the new standard container plus flexbox */
 .nav-container {
     display: flex;
     justify-content: space-between;
@@ -60,9 +133,29 @@ body {
 }
 
 .nav-links a:hover {
-    color: #ffcccc; /* Light red/pink hover effect */
+    color: #ffcccc;
 }
 
+/* --- HAMBURGER ICON BASE --- */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1001;
+}
+
+.hamburger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* ==========================================================================
+   5. LOADING SCREEN & VIDEO BANNER
+   ========================================================================== */
 /* Video Loading Screen Container */
 #loading-screen {
     position: fixed;
@@ -70,48 +163,15 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9999; /* Keeps it on top of everything */
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: #000; /* Fallback color */
-    transition: opacity 1s ease-out; /* Smooth fade out */
+    background-color: #000;
+    transition: opacity 1s ease-out;
 }
 
-/* The Background Video */
-#bg-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw; /* Forces width to 100% of viewport */
-    height: 100vh; /* Forces height to 100% of viewport */
-    object-fit: cover; /* THE MAGIC LINE: Crops perfectly to fill screen */
-    z-index: 1;
-}
-/* Double-Buffer Video Layout Fixes */
-.bg-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Crops the time-lapse to cleanly fill your 400px banner */
-    transition: opacity 2s ease-in-out; /* Buttery smooth crossfade transition */
-}
-
-/* The Dimming Overlay */
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* 60% dark overlay */
-    z-index: 2;
-}
-
-/* The Centered Text */
 .loading-content {
     position: relative;
     z-index: 3;
@@ -125,26 +185,62 @@ body {
     margin-bottom: 10px;
 }
 
+.loading-content p {
+    /* OVERRIDES THE GLOBAL PARAGRAPH RULES */
+    text-align: center;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
 #loading-percentage {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #ed2939; /* Singapore Flag Red highlight */
+    color: #ed2939;
 }
 
-/* The isolated container for your video banner background */
-.hero-banner {
-    height: 800px; /* Forces an explicit physical height for the block */
+/* The Background Video */
+#bg-video,
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    position: relative; /* Anchor point for internal absolute items */
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: opacity 2s ease-in-out;
+}
+#bg-video {
+    width: 100vw;
+    height: 100vh;
+}
+
+/* The Dimming Overlay */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+}
+
+/* Isolated container for video banner background */
+.hero-banner {
+    height: 800px;
+    width: 100%;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Clips video spillover cleanly */
+    overflow: hidden;
 }
 
-/* Double-Buffer Video Layout Constraints */
 #video-container {
-    position: absolute; /* Locks inside the bounds of .hero-banner */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -152,24 +248,12 @@ body {
     z-index: 0;
 }
 
-.bg-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Perfectly crops the clip to match the 400px box */
-    transition: opacity 2s ease-in-out;
-}
-
-/* Hero Banner Updates */
 .banner-text {
     position: relative;
     z-index: 2;
     padding: 2rem;
     color: white;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-    /* The background and padding can be removed or kept depending on if you want the dark box behind the text */
     text-align: center;
     background: rgba(0, 0, 0, 0.6);
     border-radius: 8px;
@@ -181,90 +265,18 @@ body {
 
 .banner-text p {
     font-size: 2rem;
-}
 
-/* --- FOOTER STYLES --- */
-.footer {
-    background-color: #111111; /* Deep charcoal/black background */
-    color: #ffffff;
-    border-top: 4px solid #ed2939; /* Singapore Flag Red accent line */
-    padding: 4rem 0 2rem 0; /* Space at top and bottom */
-    font-size: 0.9rem;
-}
-
-/* Grid layout to handle the columns */
-.footer-grid {
-    display: grid;
-    /* Col 1 is slightly wider (1.5 fraction) than Col 2 and 3 (1 fraction each) */
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 3rem;
-    margin-bottom: 4rem;
-}
-
-.footer-col h4 {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-}
-
-.footer-col p {
-    margin-bottom: 0.5rem;
-    color: #cccccc; /* Soft grey for readability against black */
-}
-
-.footer-col ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-col ul li {
-    margin-bottom: 0.8rem;
-}
-
-.footer-col a {
-    color: #cccccc;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer-col a:hover {
-    color: #ffffff;
-    text-decoration: underline; /* Standard accessible hover state */
-}
-
-/* Specific styling for the ACM logo */
-.footer-logo {
-    max-width: 180px;
-    margin-top: 1.5rem;
-    filter: brightness(
-        0.9
-    ); /* Subtly dims a bright white logo to fit the dark theme */
-}
-
-/* The bottom copyright area */
-.footer-bottom {
+    /* OVERRIDES THE GLOBAL PARAGRAPH RULES */
     text-align: center;
-    border-top: 1px solid #333333; /* Subtle dividing line */
-    padding-top: 2rem;
-    color: #888888;
-    font-size: 0.8rem;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
 }
 
-.footer-bottom p {
-    margin-bottom: 0.5rem;
-}
-
-.footer-bottom a {
-    color: #888888;
-    text-decoration: none;
-}
-
-.footer-bottom a:hover {
-    color: #ffffff;
-}
-
-/* --- THE SECRET SAUCE FOR EXTRA BLOCKS --- */
-/* Ensure Introduction spans the full width, but text inside is constrained */
+/* ==========================================================================
+   6. MAIN SECTIONS
+   ========================================================================== */
 /* --- INTRODUCTION SECTION --- */
 .introduction {
     position: relative;
@@ -274,22 +286,20 @@ body {
     color: #333333;
 }
 
-/* Flexbox layout to sit text and image side-by-side */
 .intro-layout {
     display: flex;
-    align-items: center; /* Vertically centers the image alongside the text */
+    align-items: center;
     justify-content: space-between;
-    gap: 4rem; /* Adds breathing room between the text and the image */
+    gap: 4rem;
 }
 
-/* Left Column Styling */
 .intro-text {
-    flex: 1; /* Tells the text to take up all remaining available space */
+    flex: 1;
 }
 
 .intro-text h2 {
     font-size: 2.2rem;
-    color: #4a0b12; /* Matches the dark burgundy/red from the screenshot */
+    color: #4a0b12;
     margin-bottom: 1.5rem;
 }
 
@@ -300,12 +310,11 @@ body {
 }
 
 .intro-text p:last-child {
-    margin-bottom: 0; /* Removes extra space after the final paragraph */
+    margin-bottom: 0;
 }
 
-/* Right Column Styling */
 .intro-image {
-    flex: 0 0 250px; /* Locks the image column to a fixed width of 250px */
+    flex: 0 0 250px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -314,7 +323,7 @@ body {
 
 .intro-image img {
     width: 100%;
-    max-width: 220px; /* Prevents the image from getting too massive */
+    max-width: 220px;
     height: auto;
     margin-bottom: 1rem;
 }
@@ -325,21 +334,10 @@ body {
     font-size: 0.95rem;
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
-@media (max-width: 800px) {
-    .intro-layout {
-        flex-direction: column; /* Stacks the image below the text on small screens */
-        gap: 3rem;
-    }
-
-    .intro-image {
-        flex: auto; /* Removes the fixed width constraint on mobile */
-    }
-}
 /* --- LATEST NEWS SECTION --- */
 .news-section {
     padding: 5rem 0;
-    background-color: #f4f4f9; /* Soft grey alternating background */
+    background-color: #f4f4f9;
     width: 100%;
 }
 
@@ -351,7 +349,6 @@ body {
     padding-bottom: 0.5rem;
 }
 
-/* Subtle red accent line under the section header */
 .section-title::after {
     content: "";
     position: absolute;
@@ -359,14 +356,14 @@ body {
     left: 0;
     width: 290px;
     height: 4px;
-    background-color: #ed2939; /* Singapore Flag Red */
+    background-color: #ed2939;
     border-radius: 2px;
 }
 
 .news-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; /* Space between news blocks */
+    gap: 1.5rem;
 }
 
 .news-item {
@@ -385,9 +382,8 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Date Badge Layout */
 .news-date {
-    background-color: #ed2939; /* Red theme color */
+    background-color: #ed2939;
     color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -416,7 +412,6 @@ body {
     opacity: 0.8;
 }
 
-/* Content Area Layout */
 .news-content {
     padding: 1.5rem 2rem;
     display: flex;
@@ -436,7 +431,7 @@ body {
 }
 
 .news-content h3 a:hover {
-    color: #ed2939; /* Highlight title on hover */
+    color: #ed2939;
 }
 
 .news-content p {
@@ -445,207 +440,15 @@ body {
     font-size: 0.95rem;
 }
 
-/* --- RESPONSIVE ADJUSTMENTS --- */
-@media (max-width: 600px) {
-    .news-item {
-        flex-direction: column; /* Stack date above content on small screens */
-    }
-
-    .news-date {
-        flex-direction: row;
-        min-width: 100%;
-        gap: 0.5rem;
-        padding: 0.6rem;
-    }
-
-    .news-date .day {
-        font-size: 1.3rem;
-    }
-
-    .news-content {
-        padding: 1.2rem;
-    }
-}
-
-/* Optional helper utility class to alternate background colors */
-.secondary-theme {
-    background-color: #f4f4f9;
-}
-
-/* --- MERLION HEADING DECORATION --- */
-h2::before {
-    content: ""; /* Required for pseudo-elements to render */
-    display: inline-block;
-    width: 40px; /* Adjust width of the Merlion */
-    height: 40px; /* Adjust height of the Merlion */
-
-    /* Point this to your actual image file */
-    background-image: url("media/merlion-logo.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    /* Spacing and Alignment */
-    margin-right: 15px; /* Pushes the text away from the image */
-    vertical-align: middle; /* Keeps the icon vertically centered with the text */
-
-    /* Optional: Slight nudge to perfectly align with the text baseline */
-    position: relative;
-    top: -3px;
-}
-
-/* If you want to exclude the Merlion from certain areas (like the banner) */
-.banner-text h2::before {
-    display: none;
-}
-
-/* --- L-BRACKET HEADING STYLE --- */
-.bracket-heading {
-    font-size: 2.2rem;
-    font-weight: 800; /* Makes the text thick and bold */
-    color: #4a0b12; /* Dark burgundy text color */
-
-    /* The Red Accent Lines */
-    border-left: 5px solid #ed2939; /* Thick left vertical line */
-    border-bottom: 2px solid #ed2939; /* Thinner bottom horizontal line */
-
-    /* Internal Spacing (Pushes text away from the lines) */
-    padding-left: 1.2rem;
-    padding-bottom: 0.8rem;
-
-    /* External Spacing (Pushes following content down) */
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-
-    /* Ensures the bottom line stretches across the entire container */
-    width: 100%;
-}
-
-/* --- HAMBURGER ICON BASE --- */
-.hamburger {
-    display: none; /* Hidden on desktop */
-    cursor: pointer;
-    flex-direction: column;
-    gap: 5px;
-    z-index: 1001; /* Keeps the icon above the sliding drawer */
-}
-
-.hamburger .bar {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-}
-
-/* --- MOBILE NAVIGATION STYLES --- */
-@media (max-width: 768px) {
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .footer-col h4 {
-        margin-bottom: 1rem;
-    }
-    /* Loading Screen */
-    .loading-content h1 {
-        font-size: 2rem; /* Shrunk from 3rem */
-    }
-    #loading-percentage {
-        font-size: 1.2rem; /* Shrunk from 1.5rem */
-    }
-
-    /* Hero Banner */
-    .banner-text h2 {
-        font-size: 1.8rem; /* Shrunk from 2.5rem */
-    }
-    .banner-text p {
-        font-size: 1.2rem; /* Shrunk from 2rem */
-    }
-
-    .hamburger {
-        display: flex;
-
-        /* 1. Force the hamburger to be the first item visually */
-        order: -1;
-
-        /* 2. Remove the rule that was pushing it to the right */
-        margin-left: 0; /* Or just delete the margin-left: auto; line you added previously */
-
-        /* 3. Add a little breathing room between the burger and your brand name */
-        margin-right: 1.5rem;
-    }
-
-    .nav-links {
-        position: fixed;
-        top: 0;
-        /* 1. Hide it off-screen to the LEFT */
-        left: -100%;
-        right: auto; /* Clears out the old right rule just in case */
-        width: 250px;
-        height: 100vh;
-        background-color: #111111;
-        flex-direction: column;
-        justify-content: flex-start;
-        padding-top: 80px;
-
-        /* 2. Tell the browser to animate the 'left' position */
-        transition: left 0.4s ease;
-
-        /* 3. Flip the shadow so it casts to the right side of the menu */
-        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-    }
-
-    /* 4. Slide it to the 0px mark on the left edge when active */
-    .nav-links.active {
-        left: 0;
-    }
-
-    /* Space out the stacked links */
-    .nav-links li {
-        text-align: center;
-        margin: 1.5rem 0;
-    }
-
-    .nav-links a {
-        font-size: 1.2rem;
-    }
-
-    /* Bonus: Animate the hamburger into an 'X' when open */
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-
-    .intro-layout {
-        flex-direction: column; /* Stacks the image below the text on small screens */
-        align-items: stretch; /* OVERRIDE: Forces the text block to take full width */
-        gap: 3rem;
-    }
-
-    .intro-image {
-        flex: auto; /* Removes the fixed width constraint on mobile */
-        align-self: center; /* OPTIONAL: Keeps the image centered horizontally if you use one */
-    }
-}
-
 /* --- COMMITTEE MEMBER GRID SYSTEM --- */
 .member-grid {
     display: grid;
-    /* Automatically handles columns based on screen size; switches to 1 column on mobile */
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 2rem;
     margin-top: 1.5rem;
     width: 100%;
 }
 
-/* Individual Card Styling */
 .member-card {
     background: #ffffff;
     border-radius: 8px;
@@ -655,7 +458,7 @@ h2::before {
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
-    border-top: 3px solid #ed2939; /* Clean Singapore Red accent line across cards */
+    border-top: 3px solid #ed2939;
 }
 
 .member-card:hover {
@@ -663,18 +466,16 @@ h2::before {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Circular Profile Avatars */
 .member-avatar img {
     width: 110px;
     height: 110px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 1.2rem;
-    background-color: #eee; /* Fallback color before image loads */
+    background-color: #eee;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Info Text Styling */
 .member-info h3 {
     font-size: 1.2rem;
     color: #222222;
@@ -696,10 +497,373 @@ h2::before {
     letter-spacing: 0.5px;
 }
 
-/* Fallback placeholder text style */
-.placeholder-text {
-    color: #666666;
-    font-style: italic;
+/* --- IMPORTANT DATES TABLE --- */
+.dates-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
     font-size: 1.05rem;
-    grid-column: 1 / -1; /* Ensures text spans cleanly even inside grid */
+}
+
+.dates-table th,
+.dates-table td {
+    padding: 1.2rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.dates-table th {
+    color: #4a0b12;
+    font-weight: 600;
+    width: 60%;
+}
+
+.dates-table td {
+    color: #333333;
+    font-weight: 500;
+}
+
+.dates-table tr:hover {
+    background-color: #fafafa;
+}
+
+/* --- CALL FOR CONTRIBUTIONS --- */
+.cfc-content-block {
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.cfc-content-block p {
+    margin-bottom: 1.2rem;
+    line-height: 1.7;
+    color: #444444;
+    font-size: 1.05rem;
+}
+
+/* Custom h3 Sub-headings */
+.cfc-content-block h3 {
+    font-size: 1.4rem;
+    color: #4a0b12; /* Matches the dark burgundy of your h2 */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    /* The subtle red accent line */
+    border-left: 3px solid #ed2939;
+    padding-left: 0.8rem;
+
+    /* Breathing room */
+    margin-top: 2.5rem; /* Pushes the heading away from the previous paragraph */
+    margin-bottom: 1rem;
+}
+
+/* Prevents the very first h3 from having a massive gap at the top of the section */
+.cfc-content-block h3:first-of-type {
+    margin-top: 0.5rem;
+}
+
+.cfc-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cfc-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: #444444;
+    font-size: 1.05rem;
+}
+
+.cfc-list li::before {
+    content: "■";
+    color: #ed2939;
+    position: absolute;
+    left: 0;
+    top: -1px;
+    font-size: 0.9rem;
+}
+
+.two-column-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 3rem;
+}
+
+/* --- PARTNERS & ORGANIZERS --- */
+.partners-section {
+    width: 100%;
+    padding: 5rem 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.partners-title {
+    font-size: 2rem;
+    color: #333333;
+    margin-bottom: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.partners-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+    flex-wrap: wrap;
+}
+
+.partner-logo img {
+    max-width: 250px;
+    height: auto;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    mix-blend-mode: multiply;
+}
+
+.partner-logo img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   7. FOOTER
+   ========================================================================== */
+.footer {
+    background-color: #111111;
+    color: #ffffff;
+    border-top: 4px solid #ed2939;
+    padding: 4rem 0 2rem 0;
+    font-size: 0.9rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+.footer-col h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.footer-col p {
+    margin-bottom: 0.5rem;
+    color: #cccccc;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-col a {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-col a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer-logo {
+    max-width: 180px;
+    margin-top: 1.5rem;
+    filter: brightness(0.9);
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #333333;
+    padding-top: 2rem;
+    color: #888888;
+    font-size: 0.8rem;
+}
+
+.footer-bottom p {
+    margin-bottom: 0.5rem;
+}
+
+.footer-bottom a {
+    color: #888888;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   8. MOBILE RESPONSIVENESS (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Navbar & Hamburger Drawer */
+    .hamburger {
+        display: flex;
+        order: -1;
+        margin-left: 0;
+        margin-right: 1.5rem;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        right: auto;
+        width: 250px;
+        height: 100vh;
+        background-color: #111111;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        transition: left 0.4s ease;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-links li {
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+    }
+
+    /* Hamburger Animation */
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Loading Screen & Hero Banner */
+    .loading-content h1 {
+        font-size: 2rem;
+    }
+    .loading-content p {
+        /* OVERRIDES THE GLOBAL PARAGRAPH RULES */
+        text-align: center;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+    }
+    #loading-percentage {
+        font-size: 1.2rem;
+    }
+    .banner-text h2 {
+        font-size: 1.8rem;
+    }
+    .banner-text p {
+        font-size: 1.2rem;
+
+        /* OVERRIDES THE GLOBAL PARAGRAPH RULES */
+        text-align: center;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+    }
+
+    /* Introduction Section */
+    .intro-layout {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 3rem;
+    }
+
+    .intro-image {
+        flex: auto;
+        align-self: center;
+    }
+
+    /* Dates Table */
+    .dates-table th,
+    .dates-table td {
+        display: block;
+        width: 100%;
+        padding: 0.5rem 0;
+    }
+
+    .dates-table th {
+        border-bottom: none;
+        padding-top: 1.2rem;
+    }
+
+    .dates-table td {
+        padding-bottom: 1.2rem;
+        font-weight: 700;
+        color: #ed2939;
+    }
+
+    /* Call for Contributions */
+    .two-column-list {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    /* Partners Section (formerly Sponsors) */
+    .partners-flex {
+        gap: 3rem;
+        flex-direction: column;
+    }
+
+    .partners-title {
+        font-size: 1.5rem;
+    }
+
+    /* Footer */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-col h4 {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Smaller Breakpoint for News Articles */
+@media (max-width: 600px) {
+    .news-item {
+        flex-direction: column;
+    }
+
+    .news-date {
+        flex-direction: row;
+        min-width: 100%;
+        gap: 0.5rem;
+        padding: 0.6rem;
+    }
+
+    .news-date .day {
+        font-size: 1.3rem;
+    }
+
+    .news-content {
+        padding: 1.2rem;
+    }
 }

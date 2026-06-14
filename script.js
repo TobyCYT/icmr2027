@@ -1,74 +1,145 @@
-const vid1 = document.getElementById("vid1");
-const vid2 = document.getElementById("vid2");
+// Variable declarations
+let vid1, vid2;
 let isVid1Active = true;
 let currentFile = "";
+let isFirstLoad = true; // <-- NEW: The flag to track our first load
 
 // Pre-define your loop filenames
 const loops = {
   night: "night.mp4",
   day: "day.mp4",
-  golden: "golden-hour.mp4", // Used for both sunrise/sunset
+  golden: "golden-hour.mp4",
 };
 
-async function syncBackground() {
-  // Marina Bay Coordinates
-  const res = await fetch(
-    "https://api.sunrise-sunset.org/json?lat=1.2897&lng=103.8501&formatted=0",
+// Helper function to fetch sun data and crossfade
+async function fetchSunDataAndPlay(sgDateString, timeNow) {
+  const sunRes = await fetch(
+    `https://api.sunrise-sunset.org/json?lat=1.2897&lng=103.8501&date=${sgDateString}&formatted=0`,
   );
-  const data = await res.json();
+  const sunData = await sunRes.json();
 
-  const now = new Date();
-  const sunrise = new Date(data.results.sunrise);
-  const sunset = new Date(data.results.sunset);
+  const sunrise = new Date(sunData.results.sunrise);
+  const sunset = new Date(sunData.results.sunset);
 
   // Define windows (25 min twilight)
   const isGolden =
-    (now >= new Date(sunrise.getTime() - 25 * 60000) &&
-      now < new Date(sunrise.getTime() + 25 * 60000)) ||
-    (now >= new Date(sunset.getTime() - 25 * 60000) &&
-      now < new Date(sunset.getTime() + 25 * 60000));
+    (timeNow >= new Date(sunrise.getTime() - 25 * 60000) &&
+      timeNow < new Date(sunrise.getTime() + 25 * 60000)) ||
+    (timeNow >= new Date(sunset.getTime() - 25 * 60000) &&
+      timeNow < new Date(sunset.getTime() + 25 * 60000));
+
   const isDay =
-    now >= new Date(sunrise.getTime() + 25 * 60000) &&
-    now < new Date(sunset.getTime() - 25 * 60000);
+    timeNow >= new Date(sunrise.getTime() + 25 * 60000) &&
+    timeNow < new Date(sunset.getTime() - 25 * 60000);
 
   let target = isGolden ? loops.golden : isDay ? loops.day : loops.night;
 
   if (target !== currentFile) crossfade(target);
 }
 
+async function syncBackground() {
+  try {
+    // 1. The Nuclear Option: Fetch the absolute network time
+    const timeRes = await fetch(
+      "https://worldtimeapi.org/api/timezone/Asia/Singapore",
+    );
+
+    // Force an error if the API is down or blocks the request
+    if (!timeRes.ok)
+      throw new Error("WorldTimeAPI network response was not ok");
+
+    const timeData = await timeRes.json();
+    const sgDateString = timeData.datetime.split("T")[0];
+    const now = new Date(timeData.utc_datetime);
+
+    await fetchSunDataAndPlay(sgDateString, now);
+  } catch (error) {
+    console.error(
+      "Time Sync Error: API blocked or down. Falling back to local device time.",
+      error,
+    );
+
+    // 2. The Actual Fallback Code: Uses local device time if API fails
+    const localNow = new Date();
+    const sgDateStringFallback = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Singapore",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(localNow);
+
+    await fetchSunDataAndPlay(sgDateStringFallback, localNow);
+  }
+}
+
 function crossfade(targetFile) {
+  // Safety check to ensure HTML elements actually exist
+  if (!vid1 || !vid2) return;
+
   currentFile = targetFile;
   const active = isVid1Active ? vid1 : vid2;
   const inactive = isVid1Active ? vid2 : vid1;
 
   inactive.src = `media/${targetFile}`;
-  inactive.play();
 
-  inactive.style.opacity = 1;
-  active.style.opacity = 0;
+  // CRITICAL: Browsers block autoplay unless explicitly muted
+  inactive.muted = true;
 
-  isVid1Active = !isVid1Active;
+  // --- THE ASYNCHRONOUS 'PLAYING' EVENT FIX ---
+  // Wait for the hardware to physically paint the pixels before showing the video
+  inactive.addEventListener(
+    "playing",
+    () => {
+      // --- THE FIRST LOAD SNAP FIX ---
+      if (isFirstLoad) {
+        inactive.style.transition = "none";
+        active.style.transition = "none";
+
+        inactive.style.opacity = 1;
+        active.style.opacity = 0;
+
+        void inactive.offsetHeight;
+
+        inactive.style.transition = "opacity 2s ease-in-out";
+        active.style.transition = "opacity 2s ease-in-out";
+
+        isFirstLoad = false;
+      } else {
+        // --- THE STANDARD CROSSFADE ---
+        inactive.style.opacity = 1;
+        active.style.opacity = 0;
+      }
+
+      // Toggle the active video state ONLY after the transition begins
+      isVid1Active = !isVid1Active;
+    },
+    { once: true },
+  ); // <-- CRITICAL: Self-destructs the listener
+
+  // Initiate the play request
+  inactive.play().catch((e) => console.error("Browser blocked autoplay:", e));
 }
 
-// Initial call and refresh every minute
-syncBackground();
-setInterval(syncBackground, 60000);
-
-// Wait for the HTML document to fully load before running scripts
+// Wait for the HTML document to fully load before running ANY scripts
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize video variables safely
+  vid1 = document.getElementById("vid1");
+  vid2 = document.getElementById("vid2");
+
+  // Initial call and refresh every minute
+  syncBackground();
+  setInterval(syncBackground, 60000);
+
+  // --- HAMBURGER MENU LOGIC ---
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("nav-links");
 
-  // Safety check: Ensure the elements actually exist on this page
   if (hamburger && navLinks) {
     hamburger.addEventListener("click", () => {
-      // Toggle the drawer
       navLinks.classList.toggle("active");
-      // Toggle the 'X' animation
       hamburger.classList.toggle("active");
     });
 
-    // Optional but recommended: Close the menu when a link is clicked
     const links = navLinks.querySelectorAll("a");
     links.forEach((link) => {
       link.addEventListener("click", () => {
@@ -76,46 +147,119 @@ document.addEventListener("DOMContentLoaded", () => {
         hamburger.classList.remove("active");
       });
     });
-  } else {
-    console.error("Hamburger menu elements not found in the DOM.");
   }
 
+  // --- TRUE LOADING SCREEN LOGIC ---
   const loadingScreen = document.getElementById("loading-screen");
   const progressText = document.getElementById("loading-percentage");
-  const bgVideo = document.getElementById("bg-video"); // Your video element
+  const bgVideo = document.getElementById("bg-video");
 
-  // Set this to the exact second your zoom-in edit begins!
-  const zoomInStartTime = 8.0;
+  if (loadingScreen && progressText) {
+    let isFullyLoaded = false;
+    const zoomInStartTime = 8.0;
 
-  let loadProgress = 0;
-  let isFullyLoaded = false;
-
-  // 1. Force the video to loop BEFORE the zoom-in edit happens
-  bgVideo.addEventListener("timeupdate", () => {
-    if (!isFullyLoaded && bgVideo.currentTime >= zoomInStartTime) {
-      bgVideo.currentTime = 0; // Jump back to the start of the loop
-      bgVideo.play();
+    // Force video to loop BEFORE the zoom-in edit happens
+    if (bgVideo) {
+      bgVideo.addEventListener("timeupdate", () => {
+        if (!isFullyLoaded && bgVideo.currentTime >= zoomInStartTime) {
+          bgVideo.currentTime = 0;
+          bgVideo.play().catch((e) => console.error(e));
+        }
+      });
     }
-  });
 
-  // 2. Simulate network loading progress
-  const loadingInterval = setInterval(() => {
-    loadProgress += Math.floor(Math.random() * 15) + 5;
+    // --- THE VIP ASSET PRELOADER ---
+    const vipAssets = [
+      "media/golden-hour.mp4",
+      "media/day.mp4",
+      "media/night.mp4",
+      "media/merlion-logo.svg",
+      "media/sigmm-logo.png",
+      "media/smu-logo.png",
+    ];
 
-    if (loadProgress >= 100) {
-      loadProgress = 100;
-      clearInterval(loadingInterval); // Stop the numbers from counting
+    let loadedCount = 0;
+    const totalAssets = vipAssets.length;
 
-      // IMMEDIATELY trigger the CSS fade out
+    let isDismissing = false;
+
+    const dismissLoadingScreen = () => {
+      if (isDismissing) return;
+      isDismissing = true;
+
+      // BAM! Hit 100% exactly as the fade-out begins
+      progressText.innerText = "100%";
       loadingScreen.style.opacity = "0";
 
-      // Wait 1 second for the CSS fade animation to finish, then hide the element
       setTimeout(() => {
         loadingScreen.style.display = "none";
-        console.log("Loading complete, welcome to ICMR 2027!");
-      }, 1000);
+        isFullyLoaded = true;
+        console.log("Hardware synced. Welcome to ICMR 2027!");
+      }, 1000); // 1000ms matches the CSS transition time
+    };
+
+    // ULTIMATE MASTER FAILSAFE: Drops the curtain after 8 seconds no matter what
+    setTimeout(dismissLoadingScreen, 8000);
+
+    const updateProgress = () => {
+      if (isDismissing) return;
+
+      loadedCount++;
+
+      // UX FIX: Cap the visual loading at 99%.
+      // It stays at 99% while waiting for the background video frame to decode.
+      const percentage = Math.min(
+        99,
+        Math.floor((loadedCount / totalAssets) * 100),
+      );
+      progressText.innerText = percentage + "%";
+
+      // When the network finishes caching all assets
+      if (loadedCount >= totalAssets) {
+        // Wait for the background video DOM element to actually be ready to paint pixels
+        if ((vid1 && vid1.readyState >= 3) || (vid2 && vid2.readyState >= 3)) {
+          dismissLoadingScreen();
+        } else {
+          if (vid1)
+            vid1.addEventListener("playing", dismissLoadingScreen, {
+              once: true,
+            });
+          if (vid2)
+            vid2.addEventListener("playing", dismissLoadingScreen, {
+              once: true,
+            });
+
+          // Reduced this fallback from 2500ms to 1200ms to keep the UI snappy
+          // just in case the browser refuses to fire the "playing" event.
+          setTimeout(dismissLoadingScreen, 1200);
+        }
+      }
+    };
+
+    if (totalAssets === 0) {
+      updateProgress();
     }
 
-    progressText.innerText = loadProgress + "%";
-  }, 250);
+    vipAssets.forEach((src) => {
+      if (src.endsWith(".mp4") || src.endsWith(".webm")) {
+        const video = document.createElement("video");
+        video.muted = true;
+        video.playsInline = true;
+        video.preload = "auto";
+
+        video.addEventListener("canplaythrough", updateProgress, {
+          once: true,
+        });
+        video.addEventListener("error", updateProgress, { once: true });
+
+        video.src = src;
+        video.load();
+      } else {
+        const img = new Image();
+        img.onload = updateProgress;
+        img.onerror = updateProgress;
+        img.src = src;
+      }
+    });
+  }
 });
