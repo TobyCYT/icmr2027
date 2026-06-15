@@ -1,0 +1,10 @@
+[Unit]
+Description=Pull latest ICMR2027 site
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=palanteert
+Environment=REPO=/home/palanteert/project/icmr2027
+ExecStart=/home/palanteert/project/icmr2027/deploy/deploy.sh
