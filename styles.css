@@ -33,8 +33,8 @@ body {
 /* ==========================================================================
    2. TYPOGRAPHY & UTILITIES
    ========================================================================== */
-/* Optional helper utility class to alternate background colors */
-.secondary-theme {
+/* Alternate background stripe utility — applied to every other .page-section */
+.alt-bg {
     background-color: #f4f4f9;
 }
 
@@ -277,8 +277,8 @@ h2::before {
 /* ==========================================================================
    6. MAIN SECTIONS
    ========================================================================== */
-/* --- INTRODUCTION SECTION --- */
-.introduction {
+/* --- PAGE SECTION (general-purpose content stripe) --- */
+.page-section {
     position: relative;
     width: 100%;
     padding: 5rem 0;
@@ -286,34 +286,34 @@ h2::before {
     color: #333333;
 }
 
-.intro-layout {
+.section-layout {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 4rem;
 }
 
-.intro-text {
+.section-body {
     flex: 1;
 }
 
-.intro-text h2 {
+.section-body h2 {
     font-size: 2.2rem;
     color: #4a0b12;
     margin-bottom: 1.5rem;
 }
 
-.intro-text p {
+.section-body p {
     line-height: 1.6;
     margin-bottom: 1.5rem;
     font-size: 1.05rem;
 }
 
-.intro-text p:last-child {
+.section-body p:last-child {
     margin-bottom: 0;
 }
 
-.intro-image {
+.section-image {
     flex: 0 0 250px;
     text-align: center;
     display: flex;
@@ -321,14 +321,14 @@ h2::before {
     align-items: center;
 }
 
-.intro-image img {
+.section-image img {
     width: 100%;
     max-width: 220px;
     height: auto;
     margin-bottom: 1rem;
 }
 
-.intro-image p {
+.section-image p {
     font-weight: 700;
     color: #555555;
     font-size: 0.95rem;
@@ -789,13 +789,13 @@ h2::before {
     }
 
     /* Introduction Section */
-    .intro-layout {
+    .section-layout {
         flex-direction: column;
         align-items: stretch;
         gap: 3rem;
     }
 
-    .intro-image {
+    .section-image {
         flex: auto;
         align-self: center;
     }

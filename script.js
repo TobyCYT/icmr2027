@@ -174,8 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "media/day.mp4",
       "media/night.mp4",
       "media/merlion-logo.svg",
-      "media/sigmm-logo.png",
-      "media/smu-logo.png",
+      "media/sigmm.png",
+      "media/smu.png",
     ];
 
     let loadedCount = 0;
