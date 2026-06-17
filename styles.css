@@ -228,7 +228,6 @@ h2::before {
     object-fit: cover;
     z-index: 1;
     transition: opacity 2s ease-in-out;
-    will-change: opacity;
     transform: translateZ(0);
     backface-visibility: hidden;
 }
@@ -362,7 +361,6 @@ h2::before {
     overflow: hidden;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     background-color: #fff;
-    will-change: opacity;
     transform: translateZ(0);
     backface-visibility: hidden;
 }
