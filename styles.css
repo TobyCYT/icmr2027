@@ -16,7 +16,8 @@ html {
 /* Global Paragraph Styling for Academic Justification */
 p {
     text-align: justify;
-    text-justify: inter-word; /* Distributes space evenly between words, not letters */
+    text-justify: inter-word;
+    /* Distributes space evenly between words, not letters */
 
     /* CRITICAL: Allows the browser to hyphenate long words instead of creating massive white gaps */
     -webkit-hyphens: auto;
@@ -96,7 +97,8 @@ h2::before {
    4. NAVIGATION BAR
    ========================================================================== */
 .navbar {
-    background-color: #ed2939; /* Singapore Flag Red */
+    background-color: #ed2939;
+    /* Singapore Flag Red */
     color: white;
     position: sticky;
     top: 0;
@@ -230,6 +232,7 @@ h2::before {
     transform: translateZ(0);
     backface-visibility: hidden;
 }
+
 #bg-video {
     width: 100vw;
     height: 100vh;
@@ -521,6 +524,16 @@ h2::before {
     font-weight: 700;
 }
 
+.member-info p {
+    text-align: center;
+
+    /* CRITICAL: Allows the browser to hyphenate long words instead of creating massive white gaps */
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
 .member-info .affiliation {
     font-size: 0.95rem;
     color: #555555;
@@ -581,7 +594,8 @@ h2::before {
 /* Custom h3 Sub-headings */
 .cfc-content-block h3 {
     font-size: 1.4rem;
-    color: #4a0b12; /* Matches the dark burgundy of your h2 */
+    color: #4a0b12;
+    /* Matches the dark burgundy of your h2 */
     font-weight: 700;
     letter-spacing: 0.5px;
 
@@ -590,7 +604,8 @@ h2::before {
     padding-left: 0.8rem;
 
     /* Breathing room */
-    margin-top: 2.5rem; /* Pushes the heading away from the previous paragraph */
+    margin-top: 2.5rem;
+    /* Pushes the heading away from the previous paragraph */
     margin-bottom: 1rem;
 }
 
@@ -750,6 +765,7 @@ h2::before {
    8. MOBILE RESPONSIVENESS (MEDIA QUERIES)
    ========================================================================== */
 @media (max-width: 768px) {
+
     /* Navbar & Hamburger Drawer */
     .hamburger {
         display: flex;
@@ -790,9 +806,11 @@ h2::before {
     .hamburger.active .bar:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
     }
+
     .hamburger.active .bar:nth-child(2) {
         opacity: 0;
     }
+
     .hamburger.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
@@ -801,6 +819,7 @@ h2::before {
     .loading-content h1 {
         font-size: 2rem;
     }
+
     .loading-content p {
         /* OVERRIDES THE GLOBAL PARAGRAPH RULES */
         text-align: center;
@@ -809,12 +828,15 @@ h2::before {
         -ms-hyphens: none;
         hyphens: none;
     }
+
     #loading-percentage {
         font-size: 1.2rem;
     }
+
     .banner-text h2 {
         font-size: 1.8rem;
     }
+
     .banner-text p {
         font-size: 1.2rem;
 
