@@ -1,221 +1,194 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>ICMR 2027 – Home | Singapore</title>
-        <link rel="preload" href="media/merlion-logo.svg" as="image" />
-        <link rel="preload" href="media/sigmm.png" as="image" />
-        <link rel="preload" href="media/smu.png" as="image" />
-        <link rel="stylesheet" href="styles.css" />
-    </head>
-    <body>
-        <div id="loading-screen">
-            <video id="bg-video" autoplay muted playsinline>
-                <source src="media/loading-video.mp4" type="video/mp4" />
-            </video>
-            <div class="video-overlay"></div>
-            <div class="loading-content">
-                <h1>ICMR 2027</h1>
-                <h1>SINGAPORE</h1>
-                <p id="loading-percentage">0%</p>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ICMR 2027 – Home | Singapore</title>
+    <link rel="preload" href="media/merlion-logo.svg" as="image" />
+    <link rel="preload" href="media/sigmm.png" as="image" />
+    <link rel="preload" href="media/smu.png" as="image" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div id="loading-screen">
+        <video id="bg-video" autoplay muted playsinline>
+            <source src="media/loading-video.mp4" type="video/mp4" />
+        </video>
+        <div class="video-overlay"></div>
+        <div class="loading-content">
+            <h1>ICMR 2027</h1>
+            <h1>SINGAPORE</h1>
+            <p id="loading-percentage">0%</p>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="navbar-brand">ICMR 2027</div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cfc.html">Call for Contributions</a></li>
+                <li><a href="date.html">Dates</a></li>
+                <li><a href="attending.html">Attending</a></li>
+                <li><a href="organization.html">Organization</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero-banner">
+        <div id="video-container">
+            <video id="vid1" class="bg-video" autoplay muted playsinline loop></video>
+            <video id="vid2" class="bg-video" muted playsinline style="opacity: 0"></video>
         </div>
 
-        <nav class="navbar">
-            <div class="container nav-container">
-                <div class="navbar-brand">ICMR 2027</div>
-                <div class="hamburger" id="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
+        <div class="container">
+            <div class="banner-text">
+                <h2>
+                    17th ACM International Conference on Multimedia
+                    Retrieval
+                </h2>
+                <br />
+                <p>ICMR 2027</p>
+                <p>June 7-10, 2027</p>
+                <p>Singapore</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-section">
+        <div class="container">
+            <div class="section-layout">
+                <div class="section-body">
+                    <h2 class="bracket-heading">Welcome to ICMR 2027</h2>
+                    <p>
+                        The International Conference on Multimedia Retrieval
+                        (ICMR) is the premier scientific conference for
+                        multimedia retrieval worldwide. ICMR brings together
+                        researchers and practitioners to present original
+                        research, exchange ideas between academia and
+                        industry, host complementary events like workshops
+                        and panels, and facilitate networking among
+                        delegates. Join us in Singapore for cutting-edge
+                        research in multimedia information retrieval,
+                        including image, video, audio, and multimodal
+                        content analysis, search, and recommendation.
+                    </p>
                 </div>
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="cfc.html">Call for Contributions</a></li>
-                    <li><a href="date.html">Dates</a></li>
-                    <li><a href="attending.html">Attending</a></li>
-                    <li><a href="organization.html">Organization</a></li>
-                </ul>
-            </div>
-        </nav>
-
-        <section class="hero-banner">
-            <div id="video-container">
-                <video
-                    id="vid1"
-                    class="bg-video"
-                    autoplay
-                    muted
-                    playsinline
-                    loop
-                ></video>
-                <video
-                    id="vid2"
-                    class="bg-video"
-                    autoplay
-                    muted
-                    playsinline
-                    loop
-                    style="opacity: 0"
-                ></video>
-            </div>
-
-            <div class="container">
-                <div class="banner-text">
-                    <h2>
-                        17th ACM International Conference on Multimedia
-                        Retrieval
-                    </h2>
-                    <br />
-                    <p>ICMR 2027</p>
-                    <p>June 7-10, 2027</p>
-                    <p>Singapore</p>
+                <div class="section-video">
+                    <video id="intro-loop-video" autoplay muted playsinline>
+                        <source src="media/animated-logo.mp4" type="video/mp4" />
+                    </video>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <div class="page-section">
-            <div class="container">
-                <div class="section-layout">
-                    <div class="section-body">
-                        <h2 class="bracket-heading">Welcome to ICMR 2027</h2>
+    <section class="news-section">
+        <div class="container">
+            <h2 class="section-title">Latest News</h2>
+
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">15</span>
+                        <span class="month">Jun</span>
+                        <span class="year">2026</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>
+                            <a href="#cfc">Call for Contribution Now Open!</a>
+                        </h3>
                         <p>
-                            The International Conference on Multimedia Retrieval
-                            (ICMR) is the premier scientific conference for
-                            multimedia retrieval worldwide. ICMR brings together
-                            researchers and practitioners to present original
-                            research, exchange ideas between academia and
-                            industry, host complementary events like workshops
-                            and panels, and facilitate networking among
-                            delegates. Join us in Singapore for cutting-edge
-                            research in multimedia information retrieval,
-                            including image, video, audio, and multimodal
-                            content analysis, search, and recommendation.
+                            Check out our call for contribution for more
+                            information.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-date">
+                        <span class="day">01</span>
+                        <span class="month">Jun</span>
+                        <span class="year">2026</span>
+                    </div>
+                    <div class="news-content">
+                        <h3>
+                            <a href="#website">ICMR 2027 Website is Live</a>
+                        </h3>
+                        <p>
+                            Welcome to the official website for the 17th ACM
+                            International Conference on Multimedia Retrieval
+                            in Singapore. Stay tuned for further updates
+                            regarding tracking, venue details, and
+                            registration.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <section class="news-section">
-            <div class="container">
-                <h2 class="section-title">Latest News</h2>
+    <section class="partners-section">
+        <div class="container">
+            <h2 class="partners-title">
+                Sponsors & Organizing Institutions
+            </h2>
 
-                <div class="news-list">
-                    <div class="news-item">
-                        <div class="news-date">
-                            <span class="day">15</span>
-                            <span class="month">Jun</span>
-                            <span class="year">2026</span>
-                        </div>
-                        <div class="news-content">
-                            <h3>
-                                <a href="#cfc"
-                                    >Call for Contribution Now Open!</a
-                                >
-                            </h3>
-                            <p>
-                                Check out our call for contribution for more
-                                information.
-                            </p>
-                        </div>
+            <div class="partners-flex">
+                <a href="https://sigmm.org" target="_blank" rel="noopener noreferrer">
+                    <div class="partner-logo">
+                        <img src="media/sigmm.png" alt="SIGMM Sponsor Logo" />
                     </div>
+                </a>
 
-                    <div class="news-item">
-                        <div class="news-date">
-                            <span class="day">01</span>
-                            <span class="month">Jun</span>
-                            <span class="year">2026</span>
-                        </div>
-                        <div class="news-content">
-                            <h3>
-                                <a href="#website">ICMR 2027 Website is Live</a>
-                            </h3>
-                            <p>
-                                Welcome to the official website for the 17th ACM
-                                International Conference on Multimedia Retrieval
-                                in Singapore. Stay tuned for further updates
-                                regarding tracking, venue details, and
-                                registration.
-                            </p>
-                        </div>
+                <a href="https://www.smu.edu.sg/" target="_blank" rel="noopener noreferrer">
+                    <div class="partner-logo">
+                        <img src="media/smu.png" alt="Singapore Management University Logo" />
                     </div>
-                </div>
+                </a>
+
+                <a href="https://www.6estates.com/" target="_blank" rel="noopener noreferrer">
+                    <div class="partner-logo">
+                        <img src="media/6estates.png" alt="6ESTATES Logo" />
+                    </div>
+                </a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="partners-section">
-            <div class="container">
-                <h2 class="partners-title">
-                    Sponsors & Organizing Institutions
-                </h2>
-
-                <div class="partners-flex">
-                    <a
-                        href="https://sigmm.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <div class="partner-logo">
-                            <img
-                                src="media/sigmm.png"
-                                alt="SIGMM Sponsor Logo"
-                            />
-                        </div>
-                    </a>
-
-                    <a
-                        href="https://www.smu.edu.sg/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <div class="partner-logo">
-                            <img
-                                src="media/smu.png"
-                                alt="Singapore Management University Logo"
-                            />
-                        </div>
-                    </a>
-
-                    <a
-                        href="https://www.6estates.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <div class="partner-logo">
-                            <img src="media/6estates.png" alt="6ESTATES Logo" />
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-col details-col">
-                        <h4>ICMR 2027</h4>
-                        <p>International Conference on Multimedia Retrieval</p>
-                        <p>June 7-10, 2027</p>
-                        <p>Singapore</p>
-                        <!--<img
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col details-col">
+                    <h4>ICMR 2027</h4>
+                    <p>International Conference on Multimedia Retrieval</p>
+                    <p>June 7-10, 2027</p>
+                    <p>Singapore</p>
+                    <!--<img
                             src="media/acm-logo.png"
                             alt="ACM Association for Computing Machinery"
                             class="footer-logo"
                         />-->
-                    </div>
-                </div>
-
-                <div class="footer-bottom">
-                    <p>&copy; 2027 ICMR Conference. All rights reserved.</p>
-                    <p>
-                        <a href="#privacy">Privacy Policy</a> |
-                        <a href="#cookie">Cookie Policy</a>
-                    </p>
                 </div>
             </div>
-        </footer>
-        <script src="script.js"></script>
-    </body>
+
+            <div class="footer-bottom">
+                <p>&copy; 2027 ICMR Conference. All rights reserved.</p>
+                <p>
+                    <a href="#privacy">Privacy Policy</a> |
+                    <a href="#cookie">Cookie Policy</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
 </html>

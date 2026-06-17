@@ -211,6 +211,9 @@ h2::before {
     object-fit: cover;
     z-index: 1;
     transition: opacity 2s ease-in-out;
+    will-change: opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 #bg-video {
     width: 100vw;
@@ -332,6 +335,26 @@ h2::before {
     font-weight: 700;
     color: #555555;
     font-size: 0.95rem;
+}
+
+/* --- INTRO LOOP VIDEO PANEL --- */
+.section-video {
+    flex: 0 0 420px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+    will-change: opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.section-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.8s ease-in-out;
 }
 
 /* --- LATEST NEWS SECTION --- */
@@ -798,6 +821,11 @@ h2::before {
     .section-image {
         flex: auto;
         align-self: center;
+    }
+
+    .section-video {
+        flex: auto;
+        width: 100%;
     }
 
     /* Dates Table */
