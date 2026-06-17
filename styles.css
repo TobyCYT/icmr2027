@@ -110,9 +110,8 @@ h2::before {
 .nav-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-top: 1.2rem;
-    padding-bottom: 1.2rem;
+    align-items: stretch;
+    min-height: 70px;
 }
 
 .navbar-brand {
@@ -122,6 +121,43 @@ h2::before {
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    color: black;
+    padding: 0 55px 0 75px;
+    position: relative;
+    z-index: 1;
+}
+
+.navbar-brand::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 60px;
+    background:
+        url('media/halftone.svg') left center / 80px 100% no-repeat,
+        linear-gradient(to right, transparent 79px, white 79px);
+    z-index: -1;
+}
+
+.navbar-brand::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 140px;
+    transform: skewX(-20deg);
+    transform-origin: bottom right;
+    background: linear-gradient(to left,
+            white 0, white 6px,
+            transparent 6px, transparent 11px,
+            white 11px, white 17px,
+            transparent 17px, transparent 22px,
+            white 22px, white 28px,
+            transparent 28px, transparent 34px,
+            white 34px, white 100%);
+    z-index: -1;
 }
 
 .navbar-logo {
@@ -139,6 +175,7 @@ h2::before {
 .nav-links {
     list-style: none;
     display: flex;
+    align-items: center;
     gap: 1.5rem;
 }
 
@@ -160,6 +197,7 @@ h2::before {
     flex-direction: column;
     gap: 5px;
     z-index: 1001;
+    align-self: center;
 }
 
 .hamburger .bar {
@@ -762,7 +800,7 @@ h2::before {
 /* ==========================================================================
    8. MOBILE RESPONSIVENESS (MEDIA QUERIES)
    ========================================================================== */
-@media (max-width: 768px) {
+@media (max-width: 950px) {
 
     /* Navbar & Hamburger Drawer */
     .hamburger {
