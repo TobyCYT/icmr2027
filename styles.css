@@ -43,8 +43,8 @@ body {
 h2::before {
     content: "";
     display: inline-block;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     background-image: url("media/merlion-logo.svg");
     background-size: contain;
     background-repeat: no-repeat;
@@ -52,6 +52,13 @@ h2::before {
     margin-right: 15px;
     vertical-align: middle;
     position: relative;
+    top: -3px;
+}
+
+/* Specific Merlion alignment for multi-line headings containing contact email sub-lines */
+.bracket-heading:has(.header-email)::before {
+    width: 45px;
+    height: 45px;
     top: 10px;
 }
 
@@ -69,8 +76,8 @@ h2::before {
     border-bottom: 2px solid #ed2939;
     padding-left: 1.2rem;
     padding-bottom: 0.8rem;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
+    margin-bottom: 1.8rem;
+    margin-top: 0.5rem;
     width: 100%;
 }
 
@@ -367,7 +374,7 @@ h2::before {
 .page-section {
     position: relative;
     width: 100%;
-    padding: 5rem 0;
+    padding: 1.5rem 0;
     background-color: #ffffff;
     color: #333333;
 }
