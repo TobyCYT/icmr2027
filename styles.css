@@ -43,8 +43,8 @@ body {
 h2::before {
     content: "";
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background-image: url("media/merlion-logo.svg");
     background-size: contain;
     background-repeat: no-repeat;
@@ -52,7 +52,7 @@ h2::before {
     margin-right: 15px;
     vertical-align: middle;
     position: relative;
-    top: -3px;
+    top: 10px;
 }
 
 /* Exclude the Merlion from the banner */
@@ -72,6 +72,33 @@ h2::before {
     margin-bottom: 2rem;
     margin-top: 2rem;
     width: 100%;
+}
+
+.header-email {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #555555;
+    text-transform: none;
+    letter-spacing: normal;
+    margin-top: 0.35rem;
+    margin-left: 75px;
+}
+
+.header-email a {
+    color: #ed2939;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.header-email a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+    .header-email {
+        margin-left: 0;
+    }
 }
 
 /* Fallback placeholder text style */
@@ -968,4 +995,124 @@ h2::before {
     .news-content {
         padding: 1.2rem;
     }
+}
+
+/* --- SPONSORSHIP TABLE STYLING --- */
+.sponsorship-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+}
+
+.sponsorship-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    font-size: 0.95rem;
+    min-width: 800px;
+}
+
+.sponsorship-table th,
+.sponsorship-table td {
+    padding: 1rem 0.8rem;
+    border-bottom: 1px solid #edf2f7;
+    border-right: 1px solid #edf2f7;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.sponsorship-table th:first-child,
+.sponsorship-table td:first-child {
+    text-align: left;
+    padding-left: 1.2rem;
+}
+
+.sponsorship-table th {
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sponsorship-table th.tier-diamond {
+    background-color: #0f2b48;
+    color: #ffffff;
+}
+
+.sponsorship-table th.tier-platinum {
+    background-color: #374151;
+    color: #ffffff;
+}
+
+.sponsorship-table th.tier-gold {
+    background-color: #92400e;
+    color: #ffffff;
+}
+
+.sponsorship-table th.tier-silver {
+    background-color: #4b5563;
+    color: #ffffff;
+}
+
+.sponsorship-table th.tier-bronze {
+    background-color: #7c2d12;
+    color: #ffffff;
+}
+
+.sponsorship-table td.feature-title {
+    font-weight: 600;
+    color: #1f2937;
+    width: 35%;
+}
+
+.sponsorship-table tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.sponsorship-table tr:hover {
+    background-color: #f3f4f6;
+}
+
+.sponsorship-table .check-mark {
+    color: #ed2939;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.sponsorship-table .dash-mark {
+    color: #9ca3af;
+}
+
+.grant-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    border-top: 3px solid #ed2939;
+    transition: transform 0.2s ease;
+}
+
+.grant-card:hover {
+    transform: translateY(-3px);
+}
+
+/* --- CHAIR SECTION CONTACT LINKS --- */
+.chair-contact {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: #666666;
+}
+
+.chair-contact a {
+    color: #ed2939;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.chair-contact a:hover {
+    text-decoration: underline;
 }

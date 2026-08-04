@@ -300,6 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "media/merlion-logo.svg",
       "media/sigmm.png",
       "media/smu.png",
+      "media/6estates.png",
     ];
 
     let loadedCount = 0;
