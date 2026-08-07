@@ -255,22 +255,104 @@ document.addEventListener("DOMContentLoaded", () => {
     attemptPlay(introVideo);
   }
 
-  // --- HAMBURGER MENU LOGIC ---
+  // --- HAMBURGER MENU & BACKDROP OVERLAY LOGIC ---
   const hamburger = document.getElementById("hamburger");
   const navLinks = document.getElementById("nav-links");
 
   if (hamburger && navLinks) {
-    hamburger.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-      hamburger.classList.toggle("active");
+    // Ensure a backdrop overlay element exists for tap-outside-to-close behavior
+    let navOverlay = document.getElementById("nav-overlay");
+    if (!navOverlay) {
+      navOverlay = document.createElement("div");
+      navOverlay.id = "nav-overlay";
+      navOverlay.className = "nav-overlay";
+      document.body.appendChild(navOverlay);
+    }
+
+    const closeMenu = () => {
+      navLinks.classList.remove("active");
+      hamburger.classList.remove("active");
+      navOverlay.classList.remove("active");
+      document.body.classList.remove("menu-open");
+    };
+
+    const openMenu = () => {
+      navLinks.classList.add("active");
+      hamburger.classList.add("active");
+      navOverlay.classList.add("active");
+      document.body.classList.add("menu-open");
+    };
+
+    hamburger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (navLinks.classList.contains("active")) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
-    navLinks.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("active");
-        hamburger.classList.remove("active");
-      });
+    // Close sidebar when tapping on the backdrop overlay
+    navOverlay.addEventListener("click", closeMenu);
+    navOverlay.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+    }, { passive: false });
+
+    // Close sidebar when tapping on any non-sidebar area in the document
+    document.addEventListener("click", (e) => {
+      if (
+        navLinks.classList.contains("active") &&
+        !navLinks.contains(e.target) &&
+        !hamburger.contains(e.target)
+      ) {
+        closeMenu();
+      }
     });
+
+    // Close sidebar when clicking any link inside the nav menu
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Automatically highlight active page link
+    const currentPath = window.location.pathname.toLowerCase();
+    navLinks.querySelectorAll("a").forEach((link) => {
+      const href = link.getAttribute("href").toLowerCase();
+      if (
+        (href === "/" && (currentPath === "/" || currentPath.endsWith("/index.html") || currentPath === "")) ||
+        (href !== "/" && (currentPath.includes(href) || currentPath.endsWith(href + ".html")))
+      ) {
+        link.classList.add("active");
+      }
+    });
+  }
+
+  // --- DYNAMIC NAVBAR OVERFLOW DETECTION ---
+  const navContainer = document.querySelector(".nav-container");
+  const navbarBrand = document.querySelector(".navbar-brand");
+  const navLinksUl = document.getElementById("nav-links");
+
+  if (navContainer && navbarBrand && navLinksUl) {
+    const checkNavOverflow = () => {
+      const wasOverflow = document.body.classList.contains("is-mobile-nav");
+      document.body.classList.remove("is-mobile-nav");
+
+      const brandWidth = navbarBrand.getBoundingClientRect().width;
+      const linksWidth = navLinksUl.scrollWidth;
+      const containerWidth = navContainer.getBoundingClientRect().width;
+
+      // Calculate total required width with a 40px margin buffer
+      const requiredWidth = brandWidth + linksWidth + 40;
+
+      if (containerWidth < requiredWidth) {
+        document.body.classList.add("is-mobile-nav");
+      } else {
+        document.body.classList.remove("is-mobile-nav");
+      }
+    };
+
+    checkNavOverflow();
+    window.addEventListener("resize", checkNavOverflow);
   }
 
   // --- LOADING SCREEN LOGIC ---

@@ -43,23 +43,14 @@ body {
 h2::before {
     content: "";
     display: inline-block;
+    flex-shrink: 0;
     width: 40px;
     height: 40px;
     background-image: url("media/merlion-logo.svg");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    margin-right: 15px;
-    vertical-align: middle;
-    position: relative;
-    top: -3px;
-}
-
-/* Specific Merlion alignment for multi-line headings containing contact email sub-lines */
-.bracket-heading:has(.header-email)::before {
-    width: 45px;
-    height: 45px;
-    top: 10px;
+    margin-right: 12px;
 }
 
 /* Exclude the Merlion from the banner */
@@ -67,9 +58,12 @@ h2::before {
     display: none;
 }
 
-/* --- L-BRACKET HEADING STYLE --- */
+/* --- L-BRACKET HEADING & MEDIA OBJECT CONTAINER --- */
 .bracket-heading {
-    font-size: 2.2rem;
+    display: flex;
+    align-items: center; /* Vertically centers left logo relative to right content block */
+    gap: 14px;
+    font-size: 2.0rem;
     font-weight: 800;
     color: #4a0b12;
     border-left: 5px solid #ed2939;
@@ -79,17 +73,47 @@ h2::before {
     margin-bottom: 1.8rem;
     margin-top: 0.5rem;
     width: 100%;
+    line-height: 1.25;
+}
+
+.bracket-heading::before {
+    content: "";
+    display: block;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background-image: url("media/merlion-logo.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Standardized h2 rules for direct h2.bracket-heading or h2 inside .header-content */
+h2.bracket-heading,
+.bracket-heading .header-content h2,
+.section-body h2 {
+    font-size: 2.0rem;
+    font-weight: 800;
+    color: #4a0b12;
+    margin: 0;
+    padding: 0;
+    line-height: 1.25;
+}
+
+/* Prevent duplicate logo inside h2 when nested inside .bracket-heading container */
+h2.bracket-heading::before,
+.bracket-heading .header-content h2::before {
+    display: none;
 }
 
 .header-email {
     display: block;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 500;
     color: #555555;
     text-transform: none;
     letter-spacing: normal;
     margin-top: 0.35rem;
-    margin-left: 75px;
 }
 
 .header-email a {
@@ -103,8 +127,33 @@ h2::before {
 }
 
 @media (max-width: 576px) {
+    .bracket-heading,
+    h2.bracket-heading,
+    .bracket-heading .header-content h2,
+    .section-body h2 {
+        font-size: 1.4rem;
+    }
+
+    .bracket-heading {
+        padding-left: 0.8rem;
+        border-left-width: 4px;
+        gap: 10px;
+    }
+
+    .bracket-heading::before,
+    h2::before {
+        width: 30px;
+        height: 30px;
+    }
+
     .header-email {
-        margin-left: 0;
+        font-size: 0.78rem;
+        margin-top: 0.15rem;
+        color: #666666;
+    }
+
+    .header-email a {
+        font-weight: 500;
     }
 }
 
@@ -137,15 +186,16 @@ h2::before {
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     width: 100%;
+    height: 70px;
 }
 
 .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    min-height: 70px;
+    height: 100%;
 }
 
 .navbar-brand {
@@ -158,6 +208,7 @@ h2::before {
     color: black;
     text-decoration: none;
     padding: 0 55px 0 75px;
+    margin-right: 3.5rem;
     position: relative;
     z-index: 1;
 }
@@ -210,22 +261,47 @@ h2::before {
 .nav-links {
     list-style: none;
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
+    align-items: stretch;
+    height: 100%;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
 }
 
 .nav-links a {
     color: white;
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 0;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-links a:hover {
-    color: #ffcccc;
+    color: #ffffff;
+    background-color: #aa1220;
 }
 
-/* --- HAMBURGER ICON BASE --- */
+.nav-links a.active,
+.nav-links a:active {
+    color: #ffffff;
+    background-color: #5c0812; /* Dark red / burgundy active background */
+    box-shadow: inset 0 -4px 0 #ffffff;
+}
+
+/* --- HAMBURGER ICON BASE & NAV OVERLAY --- */
 .hamburger {
     display: none;
     cursor: pointer;
@@ -233,6 +309,8 @@ h2::before {
     gap: 5px;
     z-index: 1001;
     align-self: center;
+    padding: 8px;
+    border-radius: 4px;
 }
 
 .hamburger .bar {
@@ -241,6 +319,25 @@ h2::before {
     background-color: white;
     border-radius: 2px;
     transition: all 0.3s ease;
+}
+
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* ==========================================================================
@@ -448,28 +545,9 @@ h2::before {
 
 /* --- LATEST NEWS SECTION --- */
 .news-section {
-    padding: 5rem 0;
+    padding: 3.5rem 0;
     background-color: #f4f4f9;
     width: 100%;
-}
-
-.section-title {
-    font-size: 2.2rem;
-    color: #333;
-    margin-bottom: 3rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-}
-
-.section-title::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 290px;
-    height: 4px;
-    background-color: #ed2939;
-    border-radius: 2px;
 }
 
 .news-list {
@@ -719,33 +797,26 @@ h2::before {
 /* --- PARTNERS & ORGANIZERS --- */
 .partners-section {
     width: 100%;
-    padding: 5rem 0;
+    padding: 3rem 0 4rem 0;
     background-color: #ffffff;
-    text-align: center;
-}
-
-.partners-title {
-    font-size: 2rem;
-    color: #333333;
-    margin-bottom: 3rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .partners-flex {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5rem;
+    gap: 3.5rem;
     flex-wrap: wrap;
 }
 
 .partner-logo img {
-    max-width: 250px;
+    max-width: 200px;
+    max-height: 70px;
+    width: auto;
     height: auto;
+    object-fit: contain;
     filter: grayscale(100%);
-    opacity: 0.7;
+    opacity: 0.75;
     transition: all 0.3s ease;
     mix-blend-mode: multiply;
 }
@@ -833,11 +904,101 @@ h2::before {
 }
 
 /* ==========================================================================
-   8. MOBILE RESPONSIVENESS (MEDIA QUERIES)
+   8. MOBILE RESPONSIVENESS & DYNAMIC NAVBAR DRAWER
    ========================================================================== */
-@media (max-width: 950px) {
 
-    /* Navbar & Hamburger Drawer */
+/* Body Scroll Lock Rule when Sidebar Drawer is Open */
+body.menu-open,
+html.menu-open {
+    overflow: hidden !important;
+    touch-action: none;
+}
+
+/* Dynamic Navbar Overflow & Mobile Drawer Rules */
+body.is-mobile-nav .navbar-brand {
+    margin-right: 0;
+}
+
+body.is-mobile-nav .hamburger {
+    display: flex;
+    order: -1;
+    margin-left: 0;
+    margin-right: 1.5rem;
+}
+
+body.is-mobile-nav .nav-links {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    right: auto;
+    width: 260px;
+    height: 100vh;
+    background-color: #111111;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 80px;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    transition: left 0.4s ease;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+body.is-mobile-nav .nav-links.active {
+    left: 0;
+}
+
+body.is-mobile-nav .nav-links li {
+    width: 100%;
+    margin: 0.25rem 0;
+    height: auto;
+    display: block;
+}
+
+body.is-mobile-nav .nav-links a {
+    display: block;
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 0;
+    box-sizing: border-box;
+    text-align: left;
+    color: white;
+    height: auto;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+body.is-mobile-nav .nav-links a:hover,
+body.is-mobile-nav .nav-links a.active,
+body.is-mobile-nav .nav-links a:active {
+    background-color: rgba(239, 41, 57, 0.25);
+    color: #ffffff;
+    box-shadow: inset 4px 0 0 #ed2939;
+}
+
+body.is-mobile-nav .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+body.is-mobile-nav .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+body.is-mobile-nav .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 1050px) {
+
+    /* Navbar & Hamburger Drawer Fallback */
+    .navbar-brand {
+        margin-right: 0;
+    }
+
     .hamburger {
         display: flex;
         order: -1;
@@ -850,14 +1011,21 @@ h2::before {
         top: 0;
         left: -100%;
         right: auto;
-        width: 250px;
+        width: 260px;
         height: 100vh;
         background-color: #111111;
         flex-direction: column;
         justify-content: flex-start;
         padding-top: 80px;
+        padding-left: 0;
+        padding-right: 0;
+        gap: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
         transition: left 0.4s ease;
         box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
     }
 
     .nav-links.active {
@@ -865,12 +1033,31 @@ h2::before {
     }
 
     .nav-links li {
-        text-align: center;
-        margin: 1.5rem 0;
+        width: 100%;
+        margin: 0.25rem 0;
+        height: auto;
+        display: block;
     }
 
     .nav-links a {
-        font-size: 1.2rem;
+        display: block;
+        width: 100%;
+        font-size: 1.15rem;
+        padding: 0.9rem 1.8rem;
+        border-radius: 0;
+        box-sizing: border-box;
+        text-align: left;
+        color: white;
+        height: auto;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active,
+    .nav-links a:active {
+        background-color: rgba(239, 41, 57, 0.25);
+        color: #ffffff;
+        box-shadow: inset 4px 0 0 #ed2939;
     }
 
     /* Hamburger Animation */
@@ -961,14 +1148,12 @@ h2::before {
         gap: 0;
     }
 
-    /* Partners Section (formerly Sponsors) */
+    /* Partners Section */
     .partners-flex {
-        gap: 3rem;
-        flex-direction: column;
-    }
-
-    .partners-title {
-        font-size: 1.5rem;
+        gap: 2rem;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     /* Footer */
