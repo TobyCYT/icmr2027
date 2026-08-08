@@ -309,20 +309,40 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Close sidebar when clicking any link inside the nav menu
-    navLinks.querySelectorAll("a").forEach((link) => {
+    // Close sidebar when clicking any page link (excluding dropdown toggle)
+    navLinks.querySelectorAll("a:not(.dropdown-toggle)").forEach((link) => {
       link.addEventListener("click", closeMenu);
     });
 
-    // Automatically highlight active page link
+    // Handle Dropdown Toggle Click (mobile & click toggle)
+    const dropdownToggles = navLinks.querySelectorAll(".dropdown-toggle");
+    dropdownToggles.forEach((toggle) => {
+      toggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const parentLi = toggle.closest("li.dropdown");
+        if (parentLi) {
+          parentLi.classList.toggle("open");
+        }
+      });
+    });
+
+    // Automatically highlight active page link and parent dropdown
     const currentPath = window.location.pathname.toLowerCase();
-    navLinks.querySelectorAll("a").forEach((link) => {
-      const href = link.getAttribute("href").toLowerCase();
+    navLinks.querySelectorAll("a[href]").forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href || href.startsWith("javascript:")) return;
+      const hrefLower = href.toLowerCase();
       if (
-        (href === "/" && (currentPath === "/" || currentPath.endsWith("/index.html") || currentPath === "")) ||
-        (href !== "/" && (currentPath.includes(href) || currentPath.endsWith(href + ".html")))
+        (hrefLower === "/" && (currentPath === "/" || currentPath.endsWith("/index.html") || currentPath === "")) ||
+        (hrefLower !== "/" && (currentPath.includes(hrefLower) || currentPath.endsWith(hrefLower + ".html")))
       ) {
         link.classList.add("active");
+        const parentDropdown = link.closest("li.dropdown");
+        if (parentDropdown) {
+          const toggle = parentDropdown.querySelector(".dropdown-toggle");
+          if (toggle) toggle.classList.add("active");
+        }
       }
     });
   }
