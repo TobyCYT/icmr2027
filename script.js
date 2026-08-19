@@ -467,4 +467,93 @@ document.addEventListener("DOMContentLoaded", () => {
   // Sync video background (API-based refinement), then refresh every minute
   syncBackground();
   setInterval(syncBackground, 60000);
+
+  // Initialize Calendar Dropdowns
+  initCalendarDropdowns();
 });
+
+function initCalendarDropdowns() {
+  document.querySelectorAll(".cal-dropdown").forEach((dropdown) => {
+    const btn = dropdown.querySelector(".cal-btn");
+    const menu = dropdown.querySelector(".cal-menu");
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      document.querySelectorAll(".cal-menu.show").forEach((m) => {
+        if (m !== menu) {
+          m.classList.remove("show");
+          m.previousElementSibling?.classList.remove("active");
+        }
+      });
+      menu.classList.toggle("show");
+      btn.classList.toggle("active");
+    });
+
+    const title = btn.dataset.title || "ICMR 2027 Event";
+    const startDate = btn.dataset.start;
+    const endDate = btn.dataset.end;
+    const type = btn.dataset.type || "aoe";
+
+    let isoStart, isoEnd, desc, dStartObj, dEndObj;
+
+    if (type === "aoe") {
+      dEndObj = new Date(startDate + "T23:59:59-12:00");
+      dStartObj = new Date(dEndObj.getTime() - 3600 * 1000);
+      isoStart = dStartObj.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      isoEnd = dEndObj.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      desc = `Deadline for ${title} (11:59:59 PM Anywhere on Earth). https://www.icmr2027.org`;
+    } else {
+      dStartObj = new Date(startDate + "T09:00:00+08:00");
+      dEndObj = new Date((endDate || startDate) + "T18:00:00+08:00");
+      isoStart = dStartObj.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      isoEnd = dEndObj.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      desc = `ICMR 2027 Conference in Singapore. https://www.icmr2027.org`;
+    }
+
+    const gcalLink = menu.querySelector(".cal-gcal");
+    if (gcalLink) {
+      gcalLink.href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${isoStart}/${isoEnd}&details=${encodeURIComponent(desc)}&location=${encodeURIComponent("Singapore / AoE")}`;
+    }
+
+    const outlookLink = menu.querySelector(".cal-outlook");
+    if (outlookLink) {
+      outlookLink.href = `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${encodeURIComponent(title)}&startdt=${dStartObj.toISOString()}&enddt=${dEndObj.toISOString()}&body=${encodeURIComponent(desc)}&location=${encodeURIComponent("Singapore / AoE")}`;
+    }
+
+    const icsLink = menu.querySelector(".cal-ics");
+    if (icsLink) {
+      icsLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        const icsContent = [
+          "BEGIN:VCALENDAR",
+          "VERSION:2.0",
+          "PRODID:-//ICMR 2027//EN",
+          "BEGIN:VEVENT",
+          `SUMMARY:${title}`,
+          `DESCRIPTION:${desc}`,
+          `DTSTART:${isoStart}`,
+          `DTEND:${isoEnd}`,
+          "LOCATION:Singapore / AoE",
+          "END:VEVENT",
+          "END:VCALENDAR"
+        ].join("\r\n");
+
+        const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = window.URL.createObjectURL(blob);
+        a.download = `${title.toLowerCase().replace(/[^a-z0-9]/g, "-")}.ics`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+    }
+  });
+
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".cal-menu.show").forEach((m) => {
+      m.classList.remove("show");
+      m.previousElementSibling?.classList.remove("active");
+    });
+  });
+}

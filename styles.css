@@ -794,11 +794,99 @@ h2.bracket-heading::before,
     font-size: 1.05rem;
 }
 
+.dates-note {
+    margin-top: 0.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    color: #555555;
+    font-style: italic;
+}
+
 .dates-table th,
 .dates-table td {
     padding: 1.2rem 1rem;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
+}
+
+.date-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    position: relative;
+}
+
+.cal-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.cal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #4a0b12;
+    background-color: #fcf6f7;
+    border: 1px solid #e2c2c6;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.cal-btn:hover,
+.cal-btn.active {
+    background-color: #4a0b12;
+    color: #ffffff;
+    border-color: #4a0b12;
+}
+
+.cal-btn .caret {
+    font-size: 0.7rem;
+    transition: transform 0.2s ease;
+}
+
+.cal-btn.active .caret {
+    transform: rotate(180deg);
+}
+
+.cal-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    background: #ffffff;
+    min-width: 175px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.cal-menu.show {
+    display: block;
+}
+
+.cal-menu a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.85rem;
+    color: #333333;
+    text-decoration: none;
+    font-size: 0.825rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease;
+}
+
+.cal-menu a:hover {
+    background-color: #fcf6f7;
+    color: #4a0b12;
 }
 
 .dates-table th {
@@ -868,13 +956,52 @@ h2.bracket-heading::before,
     font-size: 1.05rem;
 }
 
-.cfc-list li::before {
+.cfc-list > li::before {
     content: "■";
     color: #ed2939;
     position: absolute;
     left: 0;
     top: -1px;
     font-size: 0.9rem;
+}
+
+.cfc-list ul {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.cfc-list ul li {
+    padding-left: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.cfc-list ul li::before {
+    content: "•";
+    color: #ed2939;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1rem;
+}
+
+.cfc-list ol {
+    list-style: decimal;
+    padding-left: 2.2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.cfc-list ol li {
+    padding-left: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.cfc-list ol li::before {
+    content: none;
 }
 
 .two-column-list {
