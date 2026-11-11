@@ -285,8 +285,8 @@ h2.bracket-heading::before,
     color: white;
     text-decoration: none;
     font-weight: 600;
-    font-size: 1.05rem;
-    padding: 0 1.25rem;
+    font-size: 1rem;
+    padding: 0 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
