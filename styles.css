@@ -1060,17 +1060,46 @@ ol.cfc-list > li::before {
     transform: scale(1.05);
 }
 
+.partner-logo-smu {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .partner-logo-smu img {
     max-width: 340px;
     max-height: 95px;
     filter: none;
-    opacity: 1;
     mix-blend-mode: normal;
+    transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-.partner-logo-smu img:hover {
+.partner-logo-smu img.logo-color {
+    opacity: 0;
+}
+
+.partner-logo-smu img.logo-bw {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    opacity: 0.75;
+}
+
+.partner-logo-smu:hover img.logo-color,
+a:focus-visible .partner-logo-smu img.logo-color {
     filter: none;
     opacity: 1;
+    transform: scale(1.03);
+}
+
+.partner-logo-smu:hover img.logo-bw,
+a:focus-visible .partner-logo-smu img.logo-bw {
+    filter: none;
+    opacity: 0;
     transform: scale(1.03);
 }
 
@@ -1503,7 +1532,7 @@ body.is-mobile-nav .hamburger.active .bar:nth-child(3) {
         flex-wrap: wrap;
     }
 
-    .partner-logo-smu img {
+    .partner-logo-smu img.logo-color {
         max-width: min(300px, 85vw);
         max-height: 85px;
     }
