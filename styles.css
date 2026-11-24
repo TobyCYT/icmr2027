@@ -1060,6 +1060,20 @@ ol.cfc-list > li::before {
     transform: scale(1.05);
 }
 
+.partner-logo-smu img {
+    max-width: 340px;
+    max-height: 95px;
+    filter: none;
+    opacity: 1;
+    mix-blend-mode: normal;
+}
+
+.partner-logo-smu img:hover {
+    filter: none;
+    opacity: 1;
+    transform: scale(1.03);
+}
+
 /* ==========================================================================
    7. FOOTER
    ========================================================================== */
@@ -1487,6 +1501,11 @@ body.is-mobile-nav .hamburger.active .bar:nth-child(3) {
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap;
+    }
+
+    .partner-logo-smu img {
+        max-width: min(300px, 85vw);
+        max-height: 85px;
     }
 
     /* Footer */

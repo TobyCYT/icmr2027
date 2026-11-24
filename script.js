@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "media/night.mp4",
       "media/merlion-logo.svg",
       "media/sigmm.png",
-      "media/smu.png",
+      "media/smu-scis.png",
       "media/6estates.png",
     ];
 
