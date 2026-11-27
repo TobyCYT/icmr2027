@@ -1170,6 +1170,19 @@ a:focus-visible .partner-logo-smu img.logo-bw {
     margin-bottom: 0.5rem;
 }
 
+.footer-bottom p.cmt-acknowledgment {
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    font-weight: 400;
+    font-style: normal;
+    text-align: left;
+    color: #aaaaaa;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
 .footer-bottom a {
     color: #888888;
     text-decoration: none;
